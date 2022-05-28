@@ -35,12 +35,12 @@ export class ProductService {
       "isInStock": false
     },
     {
-      "name": "Tablette Samsung",
+      "name": "tablette samsung",
       "price": 1150,
       "isInStock": true
     },
     {
-      "name": "Mac Book",
+      "name": "mac book",
       "price": 7700,
       "isInStock": true
     }
@@ -51,20 +51,20 @@ export class ProductService {
    return this.products;
  }
 
- seachProductByName(inputValue:string){
+ seachProductByName(inputValue:string): IProduct[]{
    if(inputValue.length!=0){
-    return this.products.filter(p => p.name.includes(inputValue));
+    return this.products.filter(p => p.name.toLocaleLowerCase().includes(inputValue.toLowerCase()));
    }
    else{
      return this.products;
    }
  }
 
- sortPriceByAsc(){
+ sortPriceByAsc(): IProduct[]{
     return this.products.slice().sort((p1, p2) => p2.price - p1.price )
  }
 
- sortPriceByDesc(){
+ sortPriceByDesc(): IProduct[]{
   return this.products.slice().sort((p1, p2) => p1.price - p2.price )
 }
 
