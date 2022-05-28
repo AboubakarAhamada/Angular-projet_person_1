@@ -1,4 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { IProduct } from "src/app/services/IProduct";
+import { ProductService } from "src/app/services/product.service";
 
 @Component({
   selector: 'product-comp',
@@ -7,50 +9,29 @@ import { Component } from "@angular/core";
 })
 
 
-export class ProductComponenet {
-  title ='Product Component'
+export class ProductComponenet  implements OnInit{
 
-  products = [
-    {
-      "name": "téléphone android",
-      "price": 1200,
-      "isInStock": true
-    },
-    {
-      "name": "téléphone iphone",
-      "price": 2900,
-      "isInStock": false
-    },
-    {
-      "name": "téléphone wiko",
-      "price": 950,
-      "isInStock": true
-    },
-    {
-      "name": "iphone prox max",
-      "price": 4800,
-      "isInStock": true
-    }
-  ]
+  inputValue:string = '';
+  products:IProduct[] = [];
 
- inputValue = '';
- list = this.products;
+  constructor(private productService: ProductService){
 
- seachProductByName(): void{
-   if(this.inputValue.length!=0){
-    this.products = this.products.filter(p => p.name.includes(this.inputValue));
-   }
-   else{
-     this.products = this.list;
-   }
+  }
+  ngOnInit(): void {
+    this.products = this.productService.getProducts();
+  }
+
+
+ seachProductByName(){
+   this.products = this.productService.seachProductByName(this.inputValue);
  }
 
  sortPriceByAsc(){
-    this.products = this.products.slice().sort((p1, p2) => p2.price - p1.price )
+    this.products = this.productService.sortPriceByAsc();
  }
 
  sortPriceByDesc(){
-  this.products = this.products.slice().sort((p1, p2) => p1.price - p2.price )
+  this.products = this.productService.sortPriceByDesc();
 }
 
 }
